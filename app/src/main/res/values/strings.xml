@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Toss Widget</string>
+    <string name="heads">HEADS</string>
+    <string name="tails">TAILS</string>
+    <string name="retry">Toss Again</string>
+    <string name="instruction">Add the widget to your home screen. Result depends on Media Volume!</string>
+</resources>

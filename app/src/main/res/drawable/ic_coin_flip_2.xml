@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Almost-edge coin (very thin ellipse) -->
+    <path
+        android:fillColor="#B8860B"
+        android:pathData="M100,100m-10,0a10,80 0,1 1,20 0a10,80 0,1 1,-20 0" />
+</vector>
