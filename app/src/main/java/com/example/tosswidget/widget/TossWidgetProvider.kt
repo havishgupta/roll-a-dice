@@ -33,7 +33,6 @@ class TossWidgetProvider : AppWidgetProvider() {
         if (intent.action == ACTION_TOSS) {
             val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
             if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                // Toggle state or just perform toss if already expanded
                 if (widgetStates[appWidgetId] != true) {
                     widgetStates[appWidgetId] = true
                 }
@@ -47,7 +46,6 @@ class TossWidgetProvider : AppWidgetProvider() {
         val layoutId = if (isExpanded) R.layout.widget_expanded else R.layout.widget_small
         val views = RemoteViews(context.packageName, layoutId)
 
-        // Intent to trigger toss/expand
         val intent = Intent(context, TossWidgetProvider::class.java).apply {
             action = ACTION_TOSS
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -59,8 +57,10 @@ class TossWidgetProvider : AppWidgetProvider() {
         if (isExpanded) {
             views.setOnClickPendingIntent(R.id.btn_retry, pendingIntent)
             views.setOnClickPendingIntent(R.id.coin_image_expanded, pendingIntent)
+            views.setTextViewText(R.id.coin_inner_text_expanded, "HEADS")
         } else {
             views.setOnClickPendingIntent(R.id.widget_root_small, pendingIntent)
+            views.setTextViewText(R.id.coin_inner_text_small, "TOSS")
         }
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
@@ -82,23 +82,20 @@ class TossWidgetProvider : AppWidgetProvider() {
         CoroutineScope(Dispatchers.Main).launch {
             val views = RemoteViews(context.packageName, R.layout.widget_expanded)
             
-            // Animation frames
             for (frame in flipFrames) {
                 views.setImageViewResource(R.id.coin_image_expanded, frame)
-                views.setTextViewText(R.id.result_text, "Tossing...")
+                views.setTextViewText(R.id.coin_inner_text_expanded, "") // hide text while flipping
                 appWidgetManager.updateAppWidget(appWidgetId, views)
-                delay(100)
+                delay(75) // slightly faster animation
             }
 
-            // Final Result
             val result = TossLogic.performToss(context)
             val finalDrawable = if (result == TossResult.HEADS) R.drawable.ic_coin_heads else R.drawable.ic_coin_tails
-            val finalText = if (result == TossResult.HEADS) context.getString(R.string.heads) else context.getString(R.string.tails)
+            val finalText = if (result == TossResult.HEADS) "HEADS" else "TAILS"
 
             views.setImageViewResource(R.id.coin_image_expanded, finalDrawable)
-            views.setTextViewText(R.id.result_text, finalText)
+            views.setTextViewText(R.id.coin_inner_text_expanded, finalText)
             
-            // Re-bind click listener for retry
             val intent = Intent(context, TossWidgetProvider::class.java).apply {
                 action = ACTION_TOSS
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)

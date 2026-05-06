@@ -3,7 +3,8 @@
     android:id="@+id/widget_root_small"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:background="@android:color/transparent">
 
     <ImageView
         android:id="@+id/coin_image_small"
@@ -11,5 +12,15 @@
         android:layout_height="match_parent"
         android:src="@drawable/ic_coin_heads"
         android:scaleType="fitCenter" />
+        
+    <TextView
+        android:id="@+id/coin_inner_text_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TOSS"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF" />
 
 </FrameLayout>
