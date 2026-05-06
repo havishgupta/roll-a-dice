@@ -5,6 +5,7 @@ A native Android application providing a smooth 3D coin toss experience inside t
 ## Features
 - **In-App Toss**: Open the app for a smooth, interactive 3D coin toss animation.
 - **Home Screen Widget**: Add a compact, transparent coin widget to your home screen for instant access to quick tosses.
+- **Custom Results**: Setting the volume as 100% or 0% always results in a heads or a tail respectively. Having the volume percentage anywhere in the middle results in a fair toss.
 
 ## How to Build
 To get the APK, you can:
